@@ -94,6 +94,16 @@ machine(
             "alsa-ucm-conf",                 # qcom-patched UCM profiles for the QRB2210 audio path
             "firmware-qcom-soc",             # adsp/modem/wlanmdsp/a702_zap — remoteprocs stay down without it
             "firmware-atheros",              # WCN3990 ath10k Wi-Fi/BT firmware
+            # A/B SLOT BLESSING — DO NOT DROP THIS.
+            # Every vendor partition on this board is A/B, and the Qualcomm
+            # boot firmware treats a boot as provisional until userspace
+            # marks the slot good. qbootctl's service runs `qbootctl -m`
+            # after boot-complete.target to do exactly that. Without it the
+            # firmware exhausts its retry count, switches to the other slot,
+            # and the board stops booting — a failure that looks like a brick
+            # and appears several reboots after the image that caused it.
+            # Debian ships the package and its postinst enables the service.
+            "qbootctl",
         ],
     },
     partitions = [
