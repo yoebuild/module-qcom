@@ -15,8 +15,10 @@ feeds and shares their glibc ABI. The suite pinned in `MODULE.star`
 
 ```
 MODULE.star                    # apt_feed() declaration for the Arduino BSP repo
+machines/
+  arduino-uno-q.star           # Arduino UNO Q machine definition
 feeds/
-  arduino/arm64/Packages       # checked-in, signature-verified package index
+  arduino/{amd64,arm64}/Packages  # checked-in, signature-verified package indexes
 keys/
   arduino-release-keyring.gpg  # Arduino Release key; trust root for InRelease
   allowed-fingerprints         # accepted signing fingerprints on key rollover
@@ -35,7 +37,7 @@ apt_feed(
     url     = "https://apt-repo.arduino.cc",
     suite   = "stable",
     component = "main",
-    arches  = ["arm64"],
+    arches  = ["amd64", "arm64"],
     index   = "feeds/arduino",
     keyring = "keys/arduino-release-keyring.gpg",
 )
@@ -46,13 +48,25 @@ and the resolver namespace, and these packages are built against Debian
 trixie's glibc and depend on Debian packages by name — they have to land in the
 same closure as `@module-debian`'s units. `qcom` is the module, not a distro.
 
-The repo also publishes amd64/i386/armel/armhf builds of the host-side Arduino
-tooling (`arduino-cli` and friends). Those are desktop tools, not board
-support, so the feed declares `arches = ["arm64"]` only.
+Only arm64 is board support; the repo's amd64/i386/armel/armhf builds are
+host-side Arduino tooling (`arduino-cli` and friends). amd64 is declared and
+checked in anyway, because a feed cannot currently cover a single arch: the
+`arches` kwarg is validated non-empty at parse time but never consulted at
+lookup time, and the resolver asks every synthetic module about every
+unresolved name. A feed missing an index for an arch the project builds
+hard-errors on names it is merely being asked about —
+
+```
+synthetic module "qcom.arduino" lookup "py3-pip":
+apt_feed: load .../feeds/arduino/amd64/Packages: no such file or directory
+```
+
+— which breaks unrelated x86_64 builds. `@module-debian` and `@module-ubuntu`
+ship both arches for the same reason.
 
 ### What's in it
 
-19 arm64 packages, in four groups:
+19 arm64 packages (and 10 amd64 host tools), in four groups:
 
 | Package | Role |
 | --- | --- |
@@ -233,18 +247,74 @@ arduino-burn-bootloader.service  MCU bootloader provisioning
 Under yoe these belong in `services = [...]` on the units that ship them, per
 the "units declare their own services" rule — not in an image-level enable list.
 
-### What a yoe image has to do differently
+## The machine: `arduino-uno-q`
 
-- **The 66 firmware partitions are out of scope**, exactly as QSPI is for
-  Jetson. yoe produces the ESP + rootfs; a vendor QDL/fastboot bundle
-  provisions the rest.
-- **ESP + rootfs + userdata is a three-partition machine definition**, not the
-  single-partition shape `module-jetson` uses.
-- **systemd-boot + BLS**, not extlinux. The kernel-install hook path is stock
-  Debian, so it works if the ESP is mounted at `/boot/efi` and a machine-id is
-  present at image build time.
-- **DTBs go on the ESP, not in `/boot`**, and the carrier overlay tool expects
-  to find them at `/boot/efi/dtb/qcom/`.
+`machines/arduino-uno-q.star` models the board as arm64, two partitions, and a
+prebuilt vendor kernel:
+
+| Field | Value |
+| --- | --- |
+| `kernel.distro_unit` | `{"debian": "linux-image-7.0.0-g122c2c22d838"}` |
+| `kernel.cmdline` | `console=ttyMSM0,115200 root=PARTLABEL=rootfs rootfstype=ext4 rootwait rw clk_ignore_unused pd_ignore_unused audit=0 deferred_probe_timeout=30` |
+| `distro_packages["debian"]` | `arduino-unoq-config`, `arduino-unoq-radio-firmware`, `arduino-linux-config`, `alsa-ucm-conf`, `firmware-qcom-soc`, `firmware-atheros` |
+| `partitions` | `efi` vfat 512M, `rootfs` ext4 10G (root) |
+
+Three decisions worth stating outright:
+
+**`clk_ignore_unused pd_ignore_unused` are mandatory, not tuning.** TrustZone
+and always-on firmware hold clocks and power domains the kernel cannot
+refcount; gating them at `late_initcall` hangs the board. Both are carried over
+from the stock `/etc/kernel/cmdline`.
+
+**`root=PARTLABEL=rootfs`, not the stock `root=UUID=…`.** The factory GPT labels
+p68 `rootfs`, and a partition label survives a reflash that a filesystem UUID
+does not.
+
+**No `userdata` partition.** p69 (18.2G ext4 at `/home/arduino`) holds user data
+and is meant to survive a rootfs reflash, so it is not image content. Mounting
+it belongs to an fstab-writing rootfs unit. This also sidesteps a builder bug —
+see below.
+
+Board enablement only. The Arduino product experience (`arduino-app-lab`,
+`arduino-app-cli`, `arduino-router`, `arduino-cli`, `adbd`) is image policy, not
+board policy; put those in an image's package list, or pull the `arduino-unoq`
+metapackage there.
+
+## Known limitations
+
+The machine definition parses, registers, and resolves. It does **not** yet
+produce a bootable artifact — the shared image pipeline was built for
+MBR + extlinux boards and this one is GPT + systemd-boot. Concretely:
+
+- **A project selecting this machine must be all-apt.** `image()` resolves the
+  machine kernel eagerly, at image-definition time, for every image in every
+  loaded module. Selecting `arduino-uno-q` in a project that also loads
+  `@module-alpine` fails during evaluation, before any build starts, with
+  `image bun-image: machine kernel has no entry for distro "alpine"`. Drop
+  `@module-alpine`, or keep UNO Q work in its own project, until yoe learns to
+  skip kernel resolution for images whose distro the selected machine can't
+  boot. The flat `kernel(unit = …)` form does not avoid this — it only trades
+  the message for an opaque `resolve_closure` unresolved-name error.
+- **The disk builder writes an MBR** (`sfdisk` `label: dos`), not GPT.
+- **The ESP is populated from the wrong path.** `_create_disk_image_debian`
+  copies `$DESTDIR/rootfs/boot/*` into the vfat partition; this board's ESP
+  content lives at `/boot/efi/`, with kernels under a machine-id directory.
+- **extlinux, not systemd-boot.** The Debian branch unconditionally generates
+  `/boot/extlinux/extlinux.conf`. This board needs `BOOTAA64.EFI` plus a Boot
+  Loader Specification type#1 entry. The stock `kernel-install` hooks already do
+  the right thing on-device; the image builder has no equivalent.
+- **`partition(contents = [...])` is inert.** It is parsed, hashed, and exposed
+  to Starlark, but neither disk-image creator reads it — the vfat partition is
+  always filled from `rootfs/boot/*`. The `contents` lists on the BeaglePlay and
+  Raspberry Pi machines are documentation today.
+- **A second ext4 partition would be wrong.** The builder runs
+  `mkfs.ext4 -d $DESTDIR/rootfs` for *every* ext4 partition, so declaring
+  `userdata` would populate it with a full second copy of the rootfs.
+- **No DTB staging.** Nothing copies `qcom/qrb2210-arduino-imola*` from the
+  kernel package to `/boot/efi/dtb/qcom/`, where U-Boot and
+  `arduino-linux-config` expect them.
+- **No flashing support.** yoe does not drive QDL/fastboot for the 66 vendor
+  partitions. First-time provisioning still needs Arduino's own bundle.
 
 ## Maintainer playbook: `yoe update-feeds`
 
@@ -252,14 +322,18 @@ When Arduino publishes an update, refresh the checked-in index from this
 module's root:
 
 ```sh
-yoe update-feeds                  # refresh feeds/arduino/arm64/Packages
-yoe update-feeds --arch arm64     # same; the only arch declared
+yoe update-feeds                  # refresh both arch indexes
+yoe update-feeds --arch arm64     # arm64 only
 ```
 
 The run fetches `dists/stable/InRelease`, verifies it against
-`keys/arduino-release-keyring.gpg`, fetches
-`dists/stable/main/binary-arm64/Packages.gz`, decompresses it, and atomically
+`keys/arduino-release-keyring.gpg`, fetches each arch's
+`dists/stable/main/binary-<arch>/Packages.gz`, decompresses it, and atomically
 rewrites the on-disk index. It writes only — review with `git diff` and commit.
+
+Watch the arm64 diff for a new `linux-image-<version>-g<hash>` name: the
+`arduino-uno-q` machine pins that exact package, so a kernel bump means editing
+`machines/arduino-uno-q.star` in the same commit.
 
 If Arduino rotates the signing key, verification fails until the new
 fingerprint is verified out of band and added:
@@ -276,16 +350,19 @@ curl -fsSL https://apt-repo.arduino.cc/arduino.asc | gpg --dearmor > keys/arduin
 
 ## Roadmap (planned)
 
-> **Status:** Only the feed exists today — `MODULE.star`, `feeds/`, and
-> `keys/`. There are no `machines/` or `units/` directories yet, so this module
-> cannot build an image on its own; it currently supplies vendor packages to a
-> Debian-based image assembled elsewhere. The items below describe intended
-> future work, informed by the board teardown above.
+> **Status:** The feed (`MODULE.star`, `feeds/`, `keys/`) and the
+> `arduino-uno-q` machine exist. There is no `units/` directory yet, and the
+> shared image pipeline cannot yet emit a bootable artifact for this board —
+> see [Known limitations](#known-limitations). Today the module supplies vendor
+> packages and a machine definition; a Debian image for this board is still
+> assembled and provisioned by hand. The items below describe intended future
+> work, informed by the board teardown above.
 
-- **`machines/arduino-uno-q.star`** — arm64, three partitions (`efi` vfat 512M,
-  `rootfs` ext4, `userdata` ext4 mounted at `/home/arduino`), kernel supplied by
-  the feed's `linux-image-…` rather than a from-source unit, cmdline matching
-  `/etc/kernel/cmdline`.
+- **Image-pipeline support for GPT + systemd-boot** — the largest gap. A GPT
+  branch in the disk builder, an ESP populated from `/boot/efi` rather than
+  `/boot`, and a BLS entry writer replacing the unconditional `extlinux.conf`.
+  This is core work in `@module-core`'s `classes/image.star`, not something
+  this module can fix on its own.
 - **A systemd-boot / BLS boot unit** — the ESP-side counterpart to
   `module-jetson`'s `jetson-extlinux`: install `BOOTAA64.EFI`, write
   `loader.conf`, and let the stock `kernel-install` hooks generate the entry.
@@ -293,6 +370,8 @@ curl -fsSL https://apt-repo.arduino.cc/arduino.asc | gpg --dearmor > keys/arduin
   package into `/boot/efi/dtb/qcom/` at image assembly time. The stock board
   mirrors the entire arm64 DTB tree there; staging only the qcom subtree is
   both smaller and sufficient.
+- **An fstab unit for `/home/arduino`** — mounts the factory-provisioned
+  `userdata` partition, which the machine deliberately does not model.
 - **Service-enable companions** — `services = [...]` on the units that ship
   `adbd`, `arduino-router`, and the App Lab services, following the
   `<svc>-enable.star` pattern `module-alpine` uses for OpenRC.

@@ -1,0 +1,148 @@
+Package: alsa-ucm-conf
+Priority: optional
+Section: libs
+Installed-Size: 1390
+Maintainer: Debian ALSA Maintainers <pkg-alsa-devel@lists.alioth.debian.org>
+Architecture: all
+Version: 1.2.14-1qcom0.1arduino3
+Depends: libasound2t64
+Filename: pool/main/a/alsa-ucm-conf/alsa-ucm-conf_1.2.14-1qcom0.1arduino3_all.deb
+Size: 94584
+MD5sum: 659184c5f6977b3bea2913bb55dd44d5
+SHA1: 402e69a10ebce293cd1eb820d317366b9f5a0aa2
+SHA256: 01098f43f2ef8d85913e774799b9a905f4d7e08ad78e4e42cc713a875b953d32
+SHA512: 02fd25885ec6ee034ea5f211e10712bac9a388fc7e3dfe1ab61f9785d5d5a604b8ce539f8c3b0c30f2e72c92fdd0ec41a13ab32234a942b510e01e89f487c07a
+Description: ALSA Use Case Manager configuration files
+ This package contains ALSA Use Case Manager configuration of audio
+ input/output names and routing for specific audio hardware. They can be
+ used with the alsaucm tool.
+ .
+ Installing these configuration files is absolutely necessary to make some
+ sound hardware work. Its installation is highly recommended in order to
+ use ALSA-backed hardware.
+ .
+ ALSA is the Advanced Linux Sound Architecture.
+Homepage: https://www.alsa-project.org/
+Multi-Arch: foreign
+
+Package: arduino-app-cli
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.12.1
+Depends: arduino-router, needrestart
+Filename: pool/main/a/arduino-app-cli/arduino-app-cli_0.12.1-1_amd64.deb
+Size: 58621264
+MD5sum: 1c1b2e46443d69fcff0e133499542a07
+SHA1: 5da7d1874cfadd29bad031b80a40078dcb4c4219
+SHA256: 570c03d8f8b7f9ca312e72b1cf101dec453d762632bf9d823dedce84ebd07a9c
+SHA512: 110a1a853212ac88db531c1bf41b229bdd0b759fd2a5f30a5ba1b3cb9ea17c08c93a8d707d071dd9d03e634f6e732a56e177219cbe7b967918d75c5b8238f9bd
+Description: Arduino app cli
+
+Package: arduino-cli
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 1.5.1
+Filename: pool/main/a/arduino-cli/arduino-cli_1.5.1-1_amd64.deb
+Size: 14880060
+MD5sum: 3e5a4b6ee2607808e7d7936cb3409d78
+SHA1: 7fa86f6df97409f19d85008a7cc145618c76f8b6
+SHA256: db838c851f350d21d26923949e76fa15056b0e9755d5c4b5071691fdd09e66a2
+SHA512: a4068a6d6407e445d82888003428c54b308b3a80a1af8b20ebb34be493cd9059410f6b2629b9414b03a680830303011db5589d77a315828228ee0b26306a3477
+Description: Arduino CLI
+
+Package: arduino-linux-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.2.0
+Depends: device-tree-compiler
+Filename: pool/main/a/arduino-linux-config/arduino-linux-config_0.2.0-1_amd64.deb
+Size: 1123636
+MD5sum: 960973aba117730a2d7bd26536fdda77
+SHA1: c02d7dbc8352f1c539284975ad02843fe85c8d6c
+SHA256: 93b707e368b307bdcb4e0658de687acbcee43fa9a4a0158b297fb4502df117d1
+SHA512: 4fba29bcf19ba2cdbd6a80770579118f4d36d3f64c55174537fde8d6c1f4843ad9319ac33436c5ad1d1d706ba285a33400efb41479cc6265a9f4984d0f4a9db7
+Description: Arduino application for board media carrier configuration
+ This tool provides a CLI interface for managing and applying 
+ device tree overlays for various media carrier boards.
+
+Package: arduino-router
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.9.0
+Depends: socat
+Filename: pool/main/a/arduino-router/arduino-router_0.9.0-1_amd64.deb
+Size: 2426440
+MD5sum: 71727dfa6a9c9712083b6ce30f050a78
+SHA1: e68da13849d44c6dc2d02b825cdcb12a2ea7e683
+SHA256: c6ca9a4677ff610d599723215049cf68dd41588760ae8e775ed2415cd729e16f
+SHA512: b44a3ca8d880e08628cd802f1c1325e15d5bda30076ac6608f2f73d5427c3d2b55dc9a816b57528f49133ebd684c29a9d14d7a21d516b181f863c78c2a90a4e3
+Description: Arduino application router
+
+Package: arduino-unoq
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.1.0
+Depends: adbd, arduino-linux-config, arduino-app-cli, arduino-router, arduino-app-lab, arduino-cli, arduino-unoq-radio-firmware, arduino-unoq-config, linux-image-7.0.0-g122c2c22d838, alsa-ucm-conf (>= 1.2.14-1qcom0.1arduino3)
+Filename: pool/main/a/arduino-unoq/arduino-unoq_0.1.0-1_amd64.deb
+Size: 888
+MD5sum: 27e8ac874e52239b78570724ef256546
+SHA1: 8c999fa78af739604466f4fbd0bb5670885c970f
+SHA256: 696143d3072dc4bd7221cd0077731dee1684b5e3aecd097706bb0b8ff6f7658d
+SHA512: 7e34fb76e8640ca8503146a0e4502a9587dd2f58ae74a5dfe6567e915a47762d93b3fcbeb95bc7a6f38d2a88f012fd33304054815b7dce1661fff7c316671de8
+Description: Meta package for Arduino UNO Q board software
+ Installs all required packages for the Arduino UNO Q board.
+
+Package: arduino-unoq-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.1.0
+Suggests: onboard
+Filename: pool/main/a/arduino-unoq-config/arduino-unoq-config_0.1.0-1_amd64.deb
+Size: 1400
+MD5sum: 91b185478a463b18e94e913c80e28ea0
+SHA1: 8e1857d33f23b8fd605170d21f1d5907849ed0a5
+SHA256: 0885b302b7165d0e3229f030ba8d564da28cbca52915be943a7c8b50d0549989
+SHA512: 87d74931e2db519829271a32f7cd2a4b8a4088e3875fcb72c37327803c25daacc68fe4b5fdc5ab6426e9e87c2882cffc5f59c5772217372bfe000c4903ac3832
+Description: Configuration and customization files for Arduino Uno Q boards.
+
+Package: arduino-unoq-radio-firmware
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.6.1
+Depends: coreutils
+Filename: pool/main/a/arduino-unoq-radio-firmware/arduino-unoq-radio-firmware_0.6.1-1_amd64.deb
+Size: 14260
+MD5sum: ae5d6e5b6b9e4c07c9b3b394d077a73a
+SHA1: 91285e5c32dfe60025b7f692382471bc844640b5
+SHA256: 3d408c3c1cc673044275260d196995d9231aa3d35b4a0116742d0f7b36be89de
+SHA512: 38326c4db95f0def3881fd0d54ca774c1053b5f04729a188b146e2e3a8940364aa3d0955b5aac48c54bde07a527e2acc966c2fdbddbc135bf47b657e720d886d
+Description: Fix the Board Data File for the Qualcomm Atheros (QCA) 802.11ac Wi-Fi
+  according to the hardware installed on the board.
+
+Package: arduino-ventunoq
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.2.0
+Depends: adbd, arduino-app-cli, arduino-router, arduino-app-lab, arduino-cli, arduino-ventunoq-config
+Filename: pool/main/a/arduino-ventunoq/arduino-ventunoq_0.2.0-1_amd64.deb
+Size: 828
+MD5sum: db9753bdabfc82cbf98a766cf89db02c
+SHA1: 3d803c7452f732a8ab1dceb642617a225d5d08cf
+SHA256: e7f4d57523704922d899836b06a856614b95b9119d3f2e1e289354c8189133af
+SHA512: 9efcb881b2c37705fcb11a25b9187056b843465b5c4d79969b5ebd1aecdfdbd7d8eaec0f1eaf8122a81306f362852a9c7da2448941c66be8be93091d5f9864cd
+Description: Meta package for Arduino VENTUNO Q board software
+ Installs all required packages for the Arduino VENTUNO Q board.
+
+Package: arduino-ventunoq-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: amd64
+Version: 0.3.0
+Depends: qcom-fastrpc1
+Filename: pool/main/a/arduino-ventunoq-config/arduino-ventunoq-config_0.3.0-1_amd64.deb
+Size: 100208
+MD5sum: 3303698d39e80a4866f36f0de9811e68
+SHA1: e90eb17e850d511f2bbfbabc88fd2a6cec6a2261
+SHA256: a681cce515776ef0f3c451e8f4d07003d1f77995e7f310ed6b486833f7f033cf
+SHA512: b0cf9fd61b0f0fecdc62f8354dcfc94677a020c87f938851b5167e7941ce203929a3a5d0ab4e93ec3644bc7661a317c90919750057be8abd7406506073e08d2e
+Description: Configuration and customization files for Arduino Ventuno Q boards.
+

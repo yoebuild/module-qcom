@@ -25,9 +25,25 @@ module_info(
 # in the same closure as @module-debian's units, so they declare the
 # same distro. "qcom" is the module, not a distro.
 #
-# ARM64 ONLY. The repo also publishes amd64/i386/armel/armhf builds of
-# the host-side Arduino tooling (arduino-cli and friends). Those are
-# desktop tools, not board support, and are out of scope here.
+# BOTH ARCHES ARE DECLARED, THOUGH ONLY ARM64 IS BOARD SUPPORT. The repo
+# publishes the arm64 BSP plus amd64/i386/armel/armhf builds of the
+# host-side Arduino tooling (arduino-cli and friends). Only arm64
+# matters for this module's purpose.
+#
+# amd64 is declared anyway because it must be. The `arches` kwarg is
+# validated non-empty at parse time but is never consulted at lookup
+# time: the resolver consults every synthetic module for every
+# unresolved name, and the feed loads feeds/<index>/<arch>/Packages
+# unconditionally for whatever arch is active. A feed missing an index
+# for an arch the project builds therefore hard-errors on any name it
+# was merely being *asked* about —
+#
+#   synthetic module "qcom.arduino" lookup "py3-pip":
+#   apt_feed: load .../feeds/arduino/amd64/Packages: no such file
+#
+# — which breaks unrelated x86_64 builds. Until a feed can legitimately
+# declare a single arch, every apt_feed ships an index per supported
+# arch, as @module-debian and @module-ubuntu do.
 #
 # To refresh the in-tree Packages file after Arduino ships an update,
 # run `yoe update-feeds` in this module's root. That fetches the feed's
@@ -44,7 +60,7 @@ apt_feed(
     url = _ARDUINO_REPO,
     suite = _ARDUINO_SUITE,
     component = "main",
-    arches = ["arm64"],
+    arches = ["amd64", "arm64"],
     index = "feeds/arduino",
     keyring = "keys/arduino-release-keyring.gpg",
 )
