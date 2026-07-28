@@ -27,28 +27,26 @@
 # so an Alpine image built against this machine gets no board support
 # rather than force-resolving Debian package names into a musl closure.
 #
-# PROJECT CONSTRAINT: A PROJECT SELECTING THIS MACHINE MUST BE ALL-APT.
-# image() resolves the machine kernel eagerly, at image-definition time,
-# for every image in every loaded module — not just the image being
-# built. So the moment this machine is selected (defaults.machine,
-# local.star, or `yoe build --machine`), an Alpine image anywhere in the
-# module set is evaluated against a kernel that exists only in a Debian
-# feed, and project evaluation fails before any build starts:
+# The single `debian` key in `distro_unit` below is the load-bearing
+# declaration of that fact: yoe reads a machine's kernel distro_unit keys
+# as the set of distros the board can boot. Images targeting any other
+# distro are registered not-buildable on this machine — no kernel
+# resolution, no closure walk — so a project selecting this board may
+# still load @module-alpine and evaluate cleanly. Naming such an image in
+# a build is refused with the reason; an unnamed full build skips it with
+# a notice.
 #
-#   evaluating cache/modules/module-alpine/images/bun-image.star:
-#   image bun-image: machine kernel has no entry for distro "alpine"
+# Use `distro_unit` here rather than the flat `unit = "linux-image-…"`
+# form even though only one distro is listed. The flat form asserts the
+# kernel works on every distro, which for a vendor .deb is false, and
+# yoe would take it at its word — an Alpine image would then fail on an
+# opaque unresolved-name error from resolve_closure instead of being
+# marked. @module-jetson can use the flat form only because its
+# `linux-tegra` really is a distro-neutral from-source unit.
 #
-# The flat `unit = "linux-image-…"` form does not avoid this — it just
-# trades the message above for an opaque unresolved-name error from
-# resolve_closure. `distro_unit` is used here because it names the
-# actual problem. @module-jetson sidesteps the whole issue only because
-# its `linux-tegra` is a distro-neutral from-source unit; a kernel that
-# ships as a Debian package has no such escape.
-#
-# Until yoe learns to skip kernel resolution for images whose distro the
-# selected machine cannot boot, a project targeting this board must not
-# load a module that defines Alpine images (drop @module-alpine, or keep
-# UNO Q work in its own project).
+# Practical note: a project whose defaults.distro is not `debian` needs
+# `--distro debian` (or a local.star override) when building for this
+# board, or its images evaluate for the wrong distro and get marked.
 machine(
     name = "arduino-uno-q",
     arch = "arm64",
