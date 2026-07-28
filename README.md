@@ -140,8 +140,9 @@ Split across three places:
 
 ### eMMC layout
 
-A stock Qualcomm A/B GPT — 66 firmware/vendor partitions followed by three the
-OS actually uses:
+A stock Qualcomm A/B GPT — 66 vendor partitions (38 signed firmware images in 19
+A/B pairs, plus 28 single-copy state partitions) followed by three the OS
+actually uses:
 
 ```
 p1-p2    xbl_a/b          3.5M    primary bootloader
