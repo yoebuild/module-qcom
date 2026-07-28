@@ -1,0 +1,17 @@
+# Arduino apt repo signing-key fingerprints — yoe update-feeds will
+# accept these on key rollover. When Arduino rotates a key, the operator
+# verifies the new fingerprint out-of-band (against the key published at
+# https://apt-repo.arduino.cc/arduino.asc and Arduino's security
+# announcements) and appends it here via
+# `yoe update-feeds --allow-key-update=<fpr>` or by editing this file
+# directly.
+#
+# Format: one fingerprint per line, no whitespace, no spaces in the
+# fingerprint itself. Lines starting with # are comments.
+
+# Arduino Release <security@arduino.cc> — primary key (RSA 4096)
+03299136F4CB7E597F4ACB3DBF8D89202785153C
+
+# Arduino Release <security@arduino.cc> — signing subkey; this is the
+# key that actually signs dists/stable/InRelease.
+D00818C3571FFCC4DEC903D0FE3654BE8D82CD00

@@ -1,0 +1,354 @@
+Package: adbd
+Priority: optional
+Section: utils
+Installed-Size: 494
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools
+Version: 34.0.5-12arduino7
+Replaces: android-tools-adbd (<< 6.0~)
+Provides: android-tools-adbd
+Depends: android-libbase (>= 34.0.5), android-libboringssl (>= 14.0.0), android-libcutils (= 1:34.0.5-12arduino7), android-liblog (>= 34.0.5), libbrotli1 (>= 0.6.0), libc6 (>= 2.38), libgcc-s1 (>= 3.0), liblz4-1 (>= 0.0~r127), libprotobuf32t64 (>= 3.21.12), libstdc++6 (>= 13.1), libsystemd0, libzstd1 (>= 1.5.5)
+Breaks: android-tools-adbd (<< 6.0~)
+Filename: pool/main/a/android-platform-tools/adbd_34.0.5-12arduino7_arm64.deb
+Size: 176060
+MD5sum: 9bd2ea7936e65179768f40298070f215
+SHA1: 410a339aa9ade43213e237d34831471ea23996f4
+SHA256: 4dc3c7ac1371afadbcd89d1a1d8c9e57a5a8f40386f5e28925f6920bc080e41d
+SHA512: 16dcb7a714efc39e8b164f8ab69ad26857a61f2d25ea6e7e856c3b08536ac3845d4b13bcd7f28e60ad90cf56f165f34149ccf7e75c8e67150ceb48dfb42e659e
+Description: Android Debug Bridge daemon
+ Android Debug Bridge (adb) is a versatile tool that lets you manage the state
+ of an emulator instance or Android-powered device. It is a client-server
+ program that includes three components:
+ .
+ A client, which runs on your development machine. You can invoke a
+ client from a shell by issuing an adb command. Other Android tools such
+ as the ADT plugin and DDMS also create adb clients.
+ .
+ A server, which runs as a background process on your development
+ machine. The server manages communication between the client and the
+ adb daemon running on an emulator or device.
+ .
+ A daemon, which runs as a background process on each emulator or device
+ instance.
+ .
+ This package provides the daemon component.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: foreign
+
+Package: alsa-ucm-conf
+Priority: optional
+Section: libs
+Installed-Size: 1390
+Maintainer: Debian ALSA Maintainers <pkg-alsa-devel@lists.alioth.debian.org>
+Architecture: all
+Version: 1.2.14-1qcom0.1arduino3
+Depends: libasound2t64
+Filename: pool/main/a/alsa-ucm-conf/alsa-ucm-conf_1.2.14-1qcom0.1arduino3_all.deb
+Size: 94584
+MD5sum: 659184c5f6977b3bea2913bb55dd44d5
+SHA1: 402e69a10ebce293cd1eb820d317366b9f5a0aa2
+SHA256: 01098f43f2ef8d85913e774799b9a905f4d7e08ad78e4e42cc713a875b953d32
+SHA512: 02fd25885ec6ee034ea5f211e10712bac9a388fc7e3dfe1ab61f9785d5d5a604b8ce539f8c3b0c30f2e72c92fdd0ec41a13ab32234a942b510e01e89f487c07a
+Description: ALSA Use Case Manager configuration files
+ This package contains ALSA Use Case Manager configuration of audio
+ input/output names and routing for specific audio hardware. They can be
+ used with the alsaucm tool.
+ .
+ Installing these configuration files is absolutely necessary to make some
+ sound hardware work. Its installation is highly recommended in order to
+ use ALSA-backed hardware.
+ .
+ ALSA is the Advanced Linux Sound Architecture.
+Homepage: https://www.alsa-project.org/
+Multi-Arch: foreign
+
+Package: android-libbacktrace
+Priority: optional
+Section: libs
+Installed-Size: 608
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools (34.0.5-12arduino7)
+Version: 1:34.0.5-12arduino7
+Depends: android-libbase (= 1:34.0.5-12arduino7), android-liblog (>= 34.0.5), libc6 (>= 2.38), libgcc-s1 (>= 3.0), libstdc++6 (>= 13), 7zip
+Breaks: android-libbacktrace-dev (<< 1:33)
+Filename: pool/main/a/android-platform-tools/android-libbacktrace_34.0.5-12arduino7_arm64.deb
+Size: 140276
+MD5sum: 5910c676de13dab5e006d93674e29816
+SHA1: a7b50e9536b10d7a5ace01ad7a4490b0d4f46547
+SHA256: bc4d22c124823814c838cf8d1b13054b53ef9741e1792d491128d3e0d7738af9
+SHA512: 6d46024b0f4c9f6a562ae78d10762c0690459ae6849a75b1aeaeabc25866b6fbb13326206fb9be7efa75714b7948891c5ab4081301710923efe36007552f3046
+Description: Android backtrace library
+ Android backtrace library produce symbolic backtraces for making
+ debugging easier.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: same
+
+Package: android-libbase
+Priority: optional
+Section: libs
+Installed-Size: 369
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools (34.0.5-12arduino7)
+Version: 1:34.0.5-12arduino7
+Depends: android-liblog (= 1:34.0.5-12arduino7), libc6 (>= 2.38), libgcc-s1 (>= 4.5), libstdc++6 (>= 13.1)
+Breaks: android-libbase-dev (<< 1:33)
+Filename: pool/main/a/android-platform-tools/android-libbase_34.0.5-12arduino7_arm64.deb
+Size: 94480
+MD5sum: 433fdb925d83cc8f6f1e46275c6109da
+SHA1: 7b2ae4f1a91b851c821a351bf202d439638367bf
+SHA256: c96daaafde5e3b30fb7722e0e087520c3db5df20cb6089754830e988d604846e
+SHA512: c7687b165f4c7fe64aca065c07cb4ee7d75d1f32650c362f69ca118710b642ed49abc09c77161e31d6002fffd3e724a93ad2149590064733ff71f96eca1656f6
+Description: Android base library
+ This library provides APIs for basic tasks like handling files, Unicode
+ strings, logging, memory allocation, integer parsing, etc..
+ .
+ This library is only used by Android SDK currently.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: same
+
+Package: android-libcutils
+Priority: optional
+Section: libs
+Installed-Size: 125
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools (34.0.5-12arduino7)
+Version: 1:34.0.5-12arduino7
+Depends: android-libbase (= 1:34.0.5-12arduino7), android-liblog (>= 34.0.5), libc6 (>= 2.38), libgcc-s1 (>= 3.0), libstdc++6 (>= 13.1), libbsd0
+Breaks: android-libcutils-dev (<< 1:33)
+Filename: pool/main/a/android-platform-tools/android-libcutils_34.0.5-12arduino7_arm64.deb
+Size: 40024
+MD5sum: f13a809421e6cd47be24c4f0f468b852
+SHA1: 142aaeb5fd7c0c7957a76d7a9ea6af885598145a
+SHA256: 3dde5a55a7fdcace90c642c95166c91c1ac11a420fdb406757fc755ebc583761
+SHA512: a1fbe796bb8301ab9dc561cca724ce74688d982a1b1198dd468c654f593dce53515f2a00eb4aaef54dba29a26028886c329604f9a058deb5cf10d8f0bb0c0f4d
+Description: Android utils library for C
+ This library provides common functionalities for android related tools.
+ .
+ This library is only used by Android SDK currently.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: same
+
+Package: android-liblog
+Priority: optional
+Section: libs
+Installed-Size: 114
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools (34.0.5-12arduino7)
+Version: 1:34.0.5-12arduino7
+Depends: libc6 (>= 2.38), libgcc-s1 (>= 3.0), libstdc++6 (>= 13)
+Breaks: android-liblog-dev (<< 1:33)
+Filename: pool/main/a/android-platform-tools/android-liblog_34.0.5-12arduino7_arm64.deb
+Size: 39204
+MD5sum: 0c60aeb444296caf071388a4f0583d05
+SHA1: 17bf5fc7e24816fb3eadde13e71ed878266286b0
+SHA256: 3235a4b57d408d9911eacd7643b88b31d3d0a302653a0d6ccbd21571f7ba911e
+SHA512: 95602fd54109da493c624c0e4ea591bddff51feeabeb05dbcef9a32e918a268a45f59e7357789fc0942a9c06eab60518ac541b52afa2db95178700edebaec6ec
+Description: Android NDK logger interfaces
+ liblog represents an interface to the volatile Android Logging system for NDK
+ (Native) applications and libraries. Interfaces for either writing or reading
+ logs. The log buffers are divided up in Main, System, Radio and Events
+ sub-logs.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: same
+
+Package: android-libutils
+Priority: optional
+Section: libs
+Installed-Size: 188
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Architecture: arm64
+Source: android-platform-tools (34.0.5-12arduino7)
+Version: 1:34.0.5-12arduino7
+Depends: android-libbacktrace (= 1:34.0.5-12arduino7), android-libcutils (= 1:34.0.5-12arduino7), android-liblog (>= 34.0.5), libc6 (>= 2.34), libgcc-s1 (>= 3.0), libstdc++6 (>= 13.1)
+Breaks: android-libutils-dev (<< 1:33)
+Filename: pool/main/a/android-platform-tools/android-libutils_34.0.5-12arduino7_arm64.deb
+Size: 56436
+MD5sum: 68b222414eec068a844e2e427a76855f
+SHA1: a2f254bf8f585a439c58608610ff044ad1f4e930
+SHA256: 80911ad5426ac370b76554a3f8b00036e32d66abda9805468055febe81782701
+SHA512: 861eaa2c66f9e6e06926f1f2367fd906fe6506df02ec19201efc84cc81539974919d9ab014863c61ceb5c214017e58f32ce20a03da109874e0e47056a54c120f
+Description: Android Utility Function Library
+ This library provides miscellaneous utility functions.
+ .
+ This library is only used by Android SDK currently.
+Homepage: https://developer.android.com/studio/releases/platform-tools
+Multi-Arch: same
+
+Package: arduino-app-cli
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.12.1
+Depends: arduino-router, needrestart
+Filename: pool/main/a/arduino-app-cli/arduino-app-cli_0.12.1-1_arm64.deb
+Size: 55776944
+MD5sum: f39200ec45759d8f447616f57b8e01eb
+SHA1: fbd7fda824a02753c8be77e9f9a301837aef7eec
+SHA256: 662bbc7c68d10fefeb60b0f2e18450f1cc5ded0862fc7cb3f85f19b42a487a92
+SHA512: 91d020b748f7d47fde0d72c7ae1ffe07807fe6034a14bbb4107225d134838cab544923cb4db6bf78914975b0586623f4e8e307f5d9cf8cc16358b2e47f4a7c91
+Description: Arduino app cli
+
+Package: arduino-app-lab
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.9.0
+Depends: libwebkit2gtk-4.1-0, fonts-noto-color-emoji
+Filename: pool/main/a/arduino-app-lab/arduino-app-lab_0.9.0-1_arm64.deb
+Size: 53567012
+MD5sum: 2c5e3c43ea5a6da40e4779032e139acc
+SHA1: 648f3e6996b144b99421648b610cb8fafd3b484f
+SHA256: 2fa3ebcd82630aac8b356bc24b6da3aeee3eddbd8aa412e0caa3e9da574078fb
+SHA512: 0f03d5447771e6e8f63ce6719e9a6516fae87519a2ab605ded89a2a2799496afad8e44bda6027efbb70a7227632d9f82d14ced2fc9fbd783afb7098fffca8f89
+Description: Arduino App Lab
+
+Package: arduino-cli
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 1.5.1
+Filename: pool/main/a/arduino-cli/arduino-cli_1.5.1-1_arm64.deb
+Size: 13319628
+MD5sum: 5e1146c000d995967f608acd1e50afb4
+SHA1: d3b73cfa760134fd4bff8f6fbd632aeb9b1328fc
+SHA256: a8a626e021a88dcb88c8a4d856075545007c9b33f1ce727bc2a35dc20e63f5fa
+SHA512: a162d774db309b1642e64a90adb992d5ded5dbb4c9b50a43ca97b1a51fa91d560d73c9de760312255f336332def82a208003d1fcba4ac4aa0ce2c65e17825328
+Description: Arduino CLI
+
+Package: arduino-linux-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.2.0
+Depends: device-tree-compiler
+Filename: pool/main/a/arduino-linux-config/arduino-linux-config_0.2.0-1_arm64.deb
+Size: 951872
+MD5sum: fc174094e62ba5c115a9869ed63ca8bd
+SHA1: 95c63b8472b6e67aa22ccd486640f518ef592e27
+SHA256: 7050e259448c0a64291ab0a6e0c74d9099dd51a1cef6e19c66fca14530e74534
+SHA512: 4e3b6794397c2e5861bf925f2a646eb0a0de7f13e1b2e8db9092f24c85db1b49615f06d800eaf1d88dc1e1378335e6be9987f4f0b63dc5e04f06206d4446b69c
+Description: Arduino application for board media carrier configuration
+ This tool provides a CLI interface for managing and applying 
+ device tree overlays for various media carrier boards.
+
+Package: arduino-router
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.9.0
+Depends: socat
+Filename: pool/main/a/arduino-router/arduino-router_0.9.0-1_arm64.deb
+Size: 2083544
+MD5sum: f81a2ce308de2e2c440eedec76eb3d74
+SHA1: e9202e3ab6a032e4774f152c52e662a65b592d86
+SHA256: a5dc50816da616ca27fda12b7375fb733254bc91d620aa334a12ebbeb4795076
+SHA512: a854814471ca5b49b5f7032ad25a629f7f2a94e66d78a521e68833d296c9c5c9ce6fd216e27f3f6dbce149b0563ab882dab91bf61d48d65ddc4a445e36cf001a
+Description: Arduino application router
+
+Package: arduino-unoq
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.1.0
+Depends: adbd, arduino-linux-config, arduino-app-cli, arduino-router, arduino-app-lab, arduino-cli, arduino-unoq-radio-firmware, arduino-unoq-config, linux-image-7.0.0-g122c2c22d838, alsa-ucm-conf (>= 1.2.14-1qcom0.1arduino3)
+Filename: pool/main/a/arduino-unoq/arduino-unoq_0.1.0-1_arm64.deb
+Size: 888
+MD5sum: d99edcd28994a0478090ec87acb08df6
+SHA1: 2885865f54439fa029870b3b3ae19f96083f2604
+SHA256: 90341e3ba3f4d0bdf0833e5fb1d51aad7c3d14bef328b0f41d78f1828ca5424e
+SHA512: 156f5e4afc92b02d3bf0b5dccb9069a883ccdc69a6ce5b67560567da69c89ccc066b6c184cd9799317d5fda4bd25ab32884da14bf4421fa1d7dfc3ad2a046faf
+Description: Meta package for Arduino UNO Q board software
+ Installs all required packages for the Arduino UNO Q board.
+
+Package: arduino-unoq-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.1.0
+Suggests: onboard
+Filename: pool/main/a/arduino-unoq-config/arduino-unoq-config_0.1.0-1_arm64.deb
+Size: 1400
+MD5sum: a7faa74f23107d63d4cbaf4b88dc8979
+SHA1: 0cf735ad52eba698206ef614857ffc741f2d05cd
+SHA256: 87124319e5f5a998af55d6b45b142403ac101c3ed1769493bc06cd3f90f1fdd1
+SHA512: 8d3c76102643bc974f9bffcbbdae00d9f610ce7cf0bced6aab682357d711608cb94224147f56c8b168837a72541351f86d08c1f90d458e42cab6d0cbf0a76408
+Description: Configuration and customization files for Arduino Uno Q boards.
+
+Package: arduino-unoq-radio-firmware
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.6.1
+Depends: coreutils
+Filename: pool/main/a/arduino-unoq-radio-firmware/arduino-unoq-radio-firmware_0.6.1-1_arm64.deb
+Size: 14264
+MD5sum: e5ad170ce05cc641c8645678c368a3e5
+SHA1: 9a4c94555d6216c3275eb412fd7ed33af314f531
+SHA256: 38145d4db8a3f084b9bcd1f65a65a7c3fd1c1a78b3838cff60806a262dc09947
+SHA512: 91d4ec2e693513adf27ce3431f628c3ac82f9aab9fc75a9622fd15e044c34b55f041c37478e6378f62dcb3cc3bf2f2cbe03e8488a540d1ab249fbaacd26d3142
+Description: Fix the Board Data File for the Qualcomm Atheros (QCA) 802.11ac Wi-Fi
+  according to the hardware installed on the board.
+
+Package: arduino-ventunoq
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.2.0
+Depends: adbd, arduino-app-cli, arduino-router, arduino-app-lab, arduino-cli, arduino-ventunoq-config
+Filename: pool/main/a/arduino-ventunoq/arduino-ventunoq_0.2.0-1_arm64.deb
+Size: 824
+MD5sum: f9da098fb0edbd56718ba7b9f1ee7288
+SHA1: c88ff3e29cedc822252973740f12412c3fdc75fd
+SHA256: ee2318e38632cd756651356e68d66a0ab54bcbb4d286b11b511ff9ddd4d9fca7
+SHA512: 9efeb99f03ff41776ce4fda135c55674a0ae4788e754abb14fb383b6a187647226d70f9a60514546ca10f9c61773e0c6f1ad725bfb39ee2d64feaa0bb40e8683
+Description: Meta package for Arduino VENTUNO Q board software
+ Installs all required packages for the Arduino VENTUNO Q board.
+
+Package: arduino-ventunoq-config
+Maintainer: arduino <support@arduino.cc>
+Architecture: arm64
+Version: 0.3.0
+Depends: qcom-fastrpc1
+Filename: pool/main/a/arduino-ventunoq-config/arduino-ventunoq-config_0.3.0-1_arm64.deb
+Size: 100380
+MD5sum: e2d8cfdd31dd6a9007e745fb4e8dda99
+SHA1: fe61ec6384c2095753a114000b8b6620a4495c84
+SHA256: 65a1bb433f2d8c5321131713a83383f733c8fe41368969ee603a33bef8ca2be9
+SHA512: 44eafe5866172bdbe253c2e7f5398b645c5501437551d4f21e70488c136bb8d6568e3d4050dc33e9b94e9a74d0e674f2c68299360d0e97ad319faca3a4a7b8aa
+Description: Configuration and customization files for Arduino Ventuno Q boards.
+
+Package: linux-headers-7.0.0-g122c2c22d838
+Priority: optional
+Section: kernel
+Installed-Size: 56010
+Maintainer: root <root@53e94718d405>
+Architecture: arm64
+Source: linux-upstream
+Version: 7.0.0-g122c2c22d838-1
+Filename: pool/main/l/linux-upstream/linux-headers-7.0.0-g122c2c22d838_7.0.0-g122c2c22d838-1_arm64.deb
+Size: 9113684
+MD5sum: 15dc88985987b25333bb5b5a230e1cb4
+SHA1: 81732701ad4527f9a7de99e3681b79e7984043eb
+SHA256: 4d1fb6b7f3b7633ac8d42b5c1d4638bccfc81a09e6a62c845f0609be264a82d6
+SHA512: 5b1719f99f7a531d493d5812348f1c25b651e08611806cc383556712e0d8630bdedf4c549bc48e300d1823c6b9bc4b84bbbcde37f7b284b4c7f2d6565ca324fe
+Description: Linux kernel headers for 7.0.0-g122c2c22d838 on arm64
+ This package provides kernel header files for 7.0.0-g122c2c22d838 on arm64
+ .
+ This is useful for people who need to build external modules
+Homepage: https://www.kernel.org/
+
+Package: linux-image-7.0.0-g122c2c22d838
+Priority: optional
+Section: kernel
+Installed-Size: 211196
+Maintainer: root <root@53e94718d405>
+Architecture: arm64
+Source: linux-upstream
+Version: 7.0.0-g122c2c22d838-1
+Filename: pool/main/l/linux-upstream/linux-image-7.0.0-g122c2c22d838_7.0.0-g122c2c22d838-1_arm64.deb
+Size: 33792024
+MD5sum: ba76a1f3e6dca44c9411a0afee01e64b
+SHA1: 78b075ceb6f478118f6e85e72fde83e075229aa0
+SHA256: fb878aa55e3d3fa05f439c8b6f395749e5177c4c15eaea5f0be415678e26f183
+SHA512: 807d132b9de242d5ba533badccd14f12d4217e1bd351142874c9d84a21da5ddd6b8fdcd643eada20cad152908bfe10d8e50a93f0619e664e469a9a58f9aafe01
+Description: Linux kernel, version 7.0.0-g122c2c22d838
+ This package contains the Linux kernel, modules and corresponding other
+ files, version: 7.0.0-g122c2c22d838.
+Homepage: https://www.kernel.org/
+
