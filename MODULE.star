@@ -1,6 +1,6 @@
 module_info(
     name = "qcom",
-    description = "Qualcomm SoC board support: wraps the Arduino BSP apt repo (kernel, device trees, radio firmware, board config for QRB2210/QCM2290 boards) as yoe units, and will carry the machine definitions and boot units for those boards. Packages here layer on top of @module-debian's trixie feeds and share its glibc ABI — the suite pinned below MUST match @module-debian's _DEBIAN_SUITE.",
+    description = "Qualcomm SoC board support: wraps the Arduino BSP apt repo (kernel, device trees, radio firmware, board config for QRB2210/QCM2290 boards) as yoe units, and will carry the machine definitions and boot units for those boards. Packages here layer on top of @module-debian's trixie feeds and share its glibc ABI — the codename pinned below MUST match @module-debian's _DEBIAN_CODENAME (the vendor repo's own dists/stable channel name says nothing about which Debian release it targets).",
 )
 
 # The Arduino UNO Q (and its sibling Ventun Q) is a Qualcomm QRB2210 /
@@ -52,13 +52,28 @@ module_info(
 # feeds/arduino/<arch>/Packages. See README.md "Maintainer playbook".
 
 _ARDUINO_REPO = "https://apt-repo.arduino.cc"
+
+# The vendor repo publishes a single channel at dists/stable. That name
+# is aptly's default, not a Debian suite: its InRelease reports
+# Origin: Arduino, Suite: stable, Codename: stable, and it carries no
+# claim about which Debian release the packages target.
 _ARDUINO_SUITE = "stable"
+
+# The release these packages are actually built against, and therefore
+# the release yoe must bootstrap the rootfs from. Nothing in the vendor
+# repo's metadata states this, so the module asserts it: the packages
+# link @module-debian's trixie glibc and depend on Debian packages by
+# name. It MUST match @module-debian's _DEBIAN_CODENAME — yoe requires
+# every apt feed in a Debian closure to agree on the codename, and a
+# mismatch here is a rootfs with two incompatible libc builds.
+_ARDUINO_CODENAME = "trixie"
 
 apt_feed(
     name = "arduino",
     distro = "debian",
     url = _ARDUINO_REPO,
     suite = _ARDUINO_SUITE,
+    codename = _ARDUINO_CODENAME,
     component = "main",
     arches = ["amd64", "arm64"],
     index = "feeds/arduino",

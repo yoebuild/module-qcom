@@ -7,9 +7,13 @@ Machine definitions and boot units for that board follow; see
 [Roadmap](#roadmap-planned).
 
 Everything in this module layers on top of `@module-debian`'s Debian trixie
-feeds and shares their glibc ABI. The suite pinned in `MODULE.star`
-(`stable`, which tracks Debian trixie) must stay consistent with
-`@module-debian`'s `_DEBIAN_SUITE`.
+feeds and shares their glibc ABI. The feed declares two separate values in
+`MODULE.star`: `suite = "stable"` is the vendor repo's own channel name (the
+`dists/stable` path it is fetched from, aptly's default, unrelated to Debian's
+`stable` alias), while `codename = "trixie"` is the Debian release these
+packages are built against. The codename must stay consistent with
+`@module-debian`'s `_DEBIAN_CODENAME`; yoe requires every apt feed in a Debian
+closure to agree on it.
 
 ## Layout
 
